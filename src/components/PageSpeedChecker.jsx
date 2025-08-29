@@ -5,7 +5,8 @@ export default function PageSpeedChecker() {
   const [strategy, setStrategy] = useState("mobile");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
-  const API_KEY = "AIzaSyDXPHfcc7ZGG0uO8TnCq19dx4ogXBvkLfA"; // Replace with your Google API key
+
+  const API_KEY = import.meta.env.VITE_PAGESPEED_API_KEY;
 
   const checkPerformance = async () => {
     if (!url) return;
@@ -30,7 +31,7 @@ export default function PageSpeedChecker() {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
       <h1 className="text-3xl font-bold mb-6 text-blue-600">PageSpeed Checker</h1>
-      
+
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
         <input
           type="text"
@@ -65,9 +66,18 @@ export default function PageSpeedChecker() {
             Score: {data.lighthouseResult.categories.performance.score * 100}
           </p>
           <div className="mt-4 text-gray-700 text-left">
-            <p><strong>LCP:</strong> {data.lighthouseResult.audits["largest-contentful-paint"].displayValue}</p>
-            <p><strong>CLS:</strong> {data.lighthouseResult.audits["cumulative-layout-shift"].displayValue}</p>
-            <p><strong>INP:</strong> {data.lighthouseResult.audits["interactive"].displayValue}</p>
+            <p>
+              <strong>LCP:</strong>{" "}
+              {data.lighthouseResult.audits["largest-contentful-paint"].displayValue}
+            </p>
+            <p>
+              <strong>CLS:</strong>{" "}
+              {data.lighthouseResult.audits["cumulative-layout-shift"].displayValue}
+            </p>
+            <p>
+              <strong>INP:</strong>{" "}
+              {data.lighthouseResult.audits["interactive"].displayValue}
+            </p>
           </div>
         </div>
       )}
